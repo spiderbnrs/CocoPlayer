@@ -19,12 +19,13 @@ public class UpdateInfoService {
 	public UpdateInfo getUpdateInfo (int urlId) throws Exception {
 		String path = mContext.getResources().getString(urlId);
 		URL serverUrl=new URL(path);
-		HttpURLConnection httpURLConnection=(HttpURLConnection)serverUrl.openConnection();
+		HttpURLConnection httpURLConnection;
+		httpURLConnection = (HttpURLConnection)serverUrl.openConnection();
 		httpURLConnection.setConnectTimeout(5000);
 		httpURLConnection.setRequestMethod("GET");
 		InputStream in=httpURLConnection.getInputStream();
 		return UpdateInfoPraser.getUpdateInfo(in);
 		
 	}
-
+	
 }
