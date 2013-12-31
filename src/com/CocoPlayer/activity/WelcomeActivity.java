@@ -201,6 +201,10 @@ public class WelcomeActivity extends Activity {
 	
 	private void loadMainUI() {
 		
+		Intent intent = new Intent();
+		intent.setClass(this, AlbumCollection.class);
+		finish();
+		startActivity(intent);
 	}
 	
 	class UpdateTask implements Runnable {
