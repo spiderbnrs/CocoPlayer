@@ -1,6 +1,7 @@
 package com.CocoPlayer.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +22,42 @@ import android.widget.TextView;
 
 import com.CocoPlayer.model.Album;
 import com.CocoPlayer.provider.DBHelper;
+import com.CocoPlayer.provider.Storage;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.example.cocoplayer.R;
 
 public class AlbumCollection extends SherlockActivity {
 	
 	
 	private MenuDrawer mDrawer;
-	private ArrayList<Album> mAlbums;
+	
+	private AlbumCollectionHandler mHandler = new AlbumCollectionHandler();
+	private AlbumAdapter mAlbumAdapter;
+	
+	
+	class AlbumCollectionHandler extends Handler {
+		
+		public void newAlbum(final Album newAlbum) {
+			
+			runOnUiThread(new Runnable() {
+				public void run() {
+					mAlbumAdapter.mAlbums.add(newAlbum);
+					mHandler.dataChanged();
+				}
+			});
+			
+		}
+		
+		public void dataChanged() {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					mAlbumAdapter.notifyDataSetChanged();
+				}
+			});
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +68,55 @@ public class AlbumCollection extends SherlockActivity {
 		setContentView(R.layout.view_album_collection);
 		
 		GridView albumGridView =(GridView)findViewById(R.id.gridView_Album);
-		mAlbums = new ArrayList<Album>();
-		Album album1 = new Album("hello",null);
-		Album album2 = new Album("HI", null);
-		mAlbums.add(album1);
-		mAlbums.add(album2);
-		albumGridView.setAdapter(new AlbumAdapter(this,mAlbums));
+		
+		
+		try {
+			mAlbumAdapter = new AlbumAdapter(this,Storage.getInstance(this).getAlbums());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		albumGridView.setAdapter(mAlbumAdapter);
 		
 	}
 	
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getSupportMenuInflater().inflate(R.menu.menu, menu);
+		return super.onCreateOptionsMenu(menu);
+		
+	}
+
+	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case R.id.menu_album_add:
+			onNewAlbum("");
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void onNewAlbum(String name) {
+		
+		Album newAlbum = new Album();
+		//通过handler，异步告诉adpater添加了一个新的album
+		newAlbum.setName("first album");
+		newAlbum.setDescription("let's check out if database works");
+		Storage.getInstance(this).addNewAlbumIntoDatabase(newAlbum);
+		mHandler.newAlbum(newAlbum);
+	}
+
+
 	private class AlbumAdapter extends BaseAdapter {
 		
 		private Context mContext;

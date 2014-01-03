@@ -1103,7 +1103,7 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040021;
         public static final int abs__title=0x7f040029;
         public static final int abs__up=0x7f04000b;
-        public static final int action_settings=0x7f040046;
+        public static final int action_settings=0x7f040047;
         public static final int bottom=0x7f040013;
         public static final int disableHome=0x7f040009;
         public static final int edit_query=0x7f040034;
@@ -1133,6 +1133,7 @@ containing a value of this type.
         public static final int md__menu=0x7f040019;
         public static final int md__translationX=0x7f04001c;
         public static final int md__translationY=0x7f04001d;
+        public static final int menu_album_add=0x7f040046;
         public static final int normal=0x7f040001;
         public static final int right=0x7f040012;
         public static final int showCustom=0x7f040008;
@@ -1180,7 +1181,8 @@ containing a value of this type.
         public static final int view_album_collection=0x7f030019;
     }
     public static final class menu {
-        public static final int player=0x7f0b0000;
+        public static final int menu=0x7f0b0000;
+        public static final int player=0x7f0b0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1223,6 +1225,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090007;
         public static final int action_settings=0x7f090011;
+        public static final int album_add=0x7f090014;
         public static final int app_name=0x7f090010;
         public static final int app_version=0x7f090013;
         public static final int hello_world=0x7f090012;

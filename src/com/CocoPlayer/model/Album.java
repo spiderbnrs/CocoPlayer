@@ -1,18 +1,32 @@
 package com.CocoPlayer.model;
 
+import java.util.UUID;
+
 
 public class Album {
 	
+	//Uuid 在全局标识
+	private String mUuid;
+	
 	private String mName;
+	private String mDescription;
 	private String mIconUri;
 	
 	public Album() {
-		mName = "unNamed";
-		mIconUri = "";
+		
+		mUuid = UUID.randomUUID().toString();
+		mName = "";
+		mIconUri = null;
+		mDescription = "";
+		
 	}
-	public Album(String name, String iconUri) {
-		mName = name;
-		mIconUri = iconUri;
+	
+	public String getUuid() {
+		return mUuid;
+	}
+	
+	public void setUuid(String Uuid){
+		mUuid = Uuid;
 	}
 	
 	public String getName() {
@@ -21,6 +35,14 @@ public class Album {
 	
 	public void setName(String name) {
 		mName = name;
+	}
+	
+	public String getDescription() {
+		return mDescription;
+	}
+	
+	public void setDescription(String description) {
+		mDescription =description;
 	}
 	
 	public String getIconUri() {

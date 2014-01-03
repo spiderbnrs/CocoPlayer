@@ -11,8 +11,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	private final static int DATABASE_INIT_VERSION = 1;
 	private final static String TABLE_ALBUM = "album";
 	
-	private final static String SQL_CREATE_ALBUM = "Create table "+TABLE_ALBUM+"(_id integer primary key autoincrement," +
-			"name TEXT, cover_uri TEXT";
+	private final static String SQL_CREATE_ALBUM = "Create table "+TABLE_ALBUM+"(_id integer primary key," +
+			"Uuid TEXT,name TEXT,description TEXT,cover_uri TEXT)";
 	
 	
 	public DBHelper(Context context, String name, CursorFactory factory,
